@@ -1,5 +1,6 @@
 import { View, Image, Text } from 'react-native'
 import { useRef, useState, useEffect } from 'react'
+import axios from 'axios'
 import Style from './style'
 
 const ListImage = () => {
@@ -11,10 +12,9 @@ const ListImage = () => {
   const imgUrl = 'https://dog.ceo/api/breeds/image/random'
 
   const getImage = async () => {
-    let response = await fetch(imgUrl)
-    let json = await response.json();
+    let response = await axios.get(imgUrl)
     let tmpImg: { uri: string } = {
-      uri: json.message
+      uri: response.data.message
     }
     return tmpImg
   }
@@ -22,23 +22,7 @@ const ListImage = () => {
   useEffect(() => {
     myInterval.current = setInterval(async () => {
       Promise.all([getImage(), getImage(), getImage()]).then((tmpImg) => {
-        // Sort img
-        Promise.all(tmpImg.map(async(data) => {
-          let r = await fetch(data.uri)
-          return {
-            uri: data.uri,
-            size: r.headers.get('Content-Length')
-          };  
-        })).then((arr) => {
-          arr.sort(function(a, b) {
-            if (a.size !== null && b.size !== null) {
-              if (a.size < b.size) return -1;
-              if (a.size > b.size) return 1;
-            }
-            return 0;
-          });
-          setImgList(imgList => [...imgList, ...arr]);
-        })
+        setImgList(imgList => [...imgList, ...tmpImg]);
       });
     }, 10000);
 
