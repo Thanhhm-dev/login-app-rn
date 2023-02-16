@@ -1,2 +1,2 @@
 # react-native
-![image](https://user-images.githubusercontent.com/75287723/215382100-5b3e41c3-8d34-4092-979e-58cdcf1f3860.png)
+https://www.youtube.com/watch?v=IF4pLnLU7co&ab_channel=H%E1%BB%A9aMinhTh%C3%A0nh
